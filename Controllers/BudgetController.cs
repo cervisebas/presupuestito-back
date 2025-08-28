@@ -59,7 +59,7 @@ namespace PresupuestitoBack.Controllers
             return await budgetService.GetAllBudgets();
         }
 
-        [HttpPatch("{id}")]
+        [HttpDelete("{id}")]
         public async Task DeleteBudget(int id)
         {
             if (id <= 0)
