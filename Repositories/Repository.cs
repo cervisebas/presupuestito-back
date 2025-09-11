@@ -21,7 +21,7 @@ namespace PresupuestitoBack.Repositories
 
         public virtual async Task<List<T>> GetAll(Expression<Func<T, bool>>? filter = null)
         {
-            
+
             IQueryable<T> query = dbSet;
             if (filter != null)
             {
@@ -31,7 +31,7 @@ namespace PresupuestitoBack.Repositories
             return await query.ToListAsync();
         }
 
-        
+
         public virtual async Task<bool> Insert(T entity)
         {
             try
@@ -118,6 +118,11 @@ namespace PresupuestitoBack.Repositories
             {
                 return false;
             }
+        }
+
+        public virtual async Task<long> GetCount()
+        {
+            return await dbSet.LongCountAsync();
         }
 
         /*
