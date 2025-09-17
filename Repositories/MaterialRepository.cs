@@ -48,14 +48,6 @@ namespace PresupuestitoBack.Repositories
                                           .ToListAsync();
         }
 
-        public async Task<InvoiceItem?> GetMaterialPrice(int MaterialId)
-        {          
-            return await context.InvoiceItems
-                                             .Where(material => material.MaterialId == MaterialId)
-                                             .Include(material => material.OMaterial)
-                                             .OrderByDescending(invoiceItem => invoiceItem.OInvoice.Date)
-                                             .FirstOrDefaultAsync();
-        }
 
     }
 }
