@@ -16,6 +16,13 @@ namespace PresupuestitoBack.Repositories
             this.context = context;
         }
 
+        public override async Task<EmployeeHistory> Insert(EmployeeHistory employeeHistory)
+        {
+            var result = await context.EmployeeHistories.AddAsync(employeeHistory);
+            await context.SaveChangesAsync();
+            return result.Entity;
+        }
+
         public override async Task<bool> Update(EmployeeHistory employeeHistory)
         {
             context.EmployeeHistories.Update(employeeHistory);
