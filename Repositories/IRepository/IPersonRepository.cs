@@ -5,6 +5,6 @@ namespace PresupuestitoBack.Repositories.IRepository
 {
     public interface IPersonRepository : IRepository<Person>
     {
-        Task<Person> GetById2();
+        Task<Person> GetLastCreatedPerson();
     }
 }
