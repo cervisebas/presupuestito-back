@@ -32,30 +32,22 @@ namespace PresupuestitoBack.Repositories
         }
 
 
-        public virtual async Task<bool> Insert(T entity)
+        public virtual async Task<T> Insert(T entity)
         {
-            try
+            // Obtener la propiedad clave
+            var keyProperty = GetKeyProperty();
+
+            // Obtener el valor de la clave primaria
+            var entityId = keyProperty.GetValue(entity);
+
+            // Verificar si la entidad ya existe
+            if (await EntityExists(keyProperty, entityId))
             {
-                // Obtener la propiedad clave
-                var keyProperty = GetKeyProperty();
-
-                // Obtener el valor de la clave primaria
-                var entityId = keyProperty.GetValue(entity);
-
-                // Verificar si la entidad ya existe
-                if (await EntityExists(keyProperty, entityId))
-                {
-                    return false; // La entidad ya existe
-                }
-
-                // Agregar la entidad y guardar cambios
-                await AddEntity(entity);
-                return true;
+                throw new Exception("El elemento ya existe");
             }
-            catch (Exception)
-            {
-                return false;
-            }
+
+            // Agregar la entidad y guardar cambios
+            return await AddEntity(entity);
         }
 
         private PropertyInfo GetKeyProperty()
@@ -77,12 +69,12 @@ namespace PresupuestitoBack.Repositories
             return existingEntity != null;
         }
 
-        private async Task AddEntity(T entity)
+        private async Task<T> AddEntity(T entity)
         {
-            _context.Set<T>().Add(entity);
+            var result = _context.Set<T>().Add(entity);
             await _context.SaveChangesAsync();
+            return result.Entity;
         }
-
 
 
         public async virtual Task<T?> GetById(int id)

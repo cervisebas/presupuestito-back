@@ -16,12 +16,6 @@ namespace PresupuestitoBack.Repositories
             this.context = context;
         }
 
-        public override async Task<bool> Insert(Budget budget)
-        {
-            await context.Budgets.AddAsync(budget);
-            await context.SaveChangesAsync();
-            return true;
-        }
 
         public override async Task<bool> Update(Budget budget)
         {

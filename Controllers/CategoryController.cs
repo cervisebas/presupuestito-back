@@ -17,9 +17,10 @@ namespace PresupuestitoBack.Controllers
         }
 
         [HttpPost]
-        public async Task CreateCategory([FromBody] CategoryRequestDto categoryRequestDto)
+        public async Task<ActionResult<CategoryResponseDto>> CreateCategory([FromBody] CategoryRequestDto categoryRequestDto)
         {
-            await categoryService.CreateCategory(categoryRequestDto);
+            var category = await categoryService.CreateCategory(categoryRequestDto);
+            return category;
         }
 
         [HttpPut("{id}")]
@@ -40,7 +41,7 @@ namespace PresupuestitoBack.Controllers
                 throw new Exception("Id invalido");
             }
             var category = await categoryService.GetCategoryById(id);
-            return Ok(category);
+            return category;
         }
 
         [HttpGet]

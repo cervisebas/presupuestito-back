@@ -16,13 +16,6 @@ namespace PresupuestitoBack.Repositories
             this.context = context;
         }
 
-        public override async Task<bool> Insert(SupplierHistory supplierHistory)
-        {
-            await context.SupplierHistories.AddAsync(supplierHistory);
-            await context.SaveChangesAsync();
-            return true;
-        }
-
         public override async Task<bool> Update(SupplierHistory supplierHistory)
         {
             context.SupplierHistories.Update(supplierHistory);
