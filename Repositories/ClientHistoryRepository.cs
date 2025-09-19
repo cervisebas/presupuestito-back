@@ -16,11 +16,11 @@ namespace PresupuestitoBack.Repositories
             this.context = context;
         }
 
-        public override async Task<bool> Insert(ClientHistory clientHistory)
+        public override async Task<ClientHistory> Insert(ClientHistory clientHistory)
         {
-            await context.ClientHistories.AddAsync(clientHistory);
+            var result = await context.ClientHistories.AddAsync(clientHistory);
             await context.SaveChangesAsync();
-            return true;
+            return result.Entity;
         }
 
         public override async Task<bool> Update(ClientHistory clientHistory)

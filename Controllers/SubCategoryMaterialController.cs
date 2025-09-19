@@ -17,9 +17,10 @@ namespace PresupuestitoBack.Controllers
         }
 
         [HttpPost]
-        public async Task CreateSubCategoryMaterial([FromBody] SubCategoryMaterialRequestDto subCategoryMaterialRequestDto)
+        public async Task<ActionResult<SubCategoryMaterialResponseDto>> CreateSubCategoryMaterial([FromBody] SubCategoryMaterialRequestDto subCategoryMaterialRequestDto)
         {
-            await subCategoryMaterialService.CreateSubCategoryMaterial(subCategoryMaterialRequestDto);
+            var subcategory = await subCategoryMaterialService.CreateSubCategoryMaterial(subCategoryMaterialRequestDto);
+            return subcategory;
         }
 
         [HttpPut("{id}")]
@@ -40,7 +41,7 @@ namespace PresupuestitoBack.Controllers
                 throw new Exception("Id invalido");
             }
             var subCategoryMaterial = await subCategoryMaterialService.GetSubCategoryMaterialById(id);
-            return Ok(subCategoryMaterial);
+            return subCategoryMaterial;
         }
 
         [HttpGet]

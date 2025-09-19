@@ -16,11 +16,11 @@ namespace PresupuestitoBack.Repositories
             this.context = context;
         }
 
-        public override async Task<bool> Insert(SubCategoryMaterial subCategoryMaterial)
+        public override async Task<SubCategoryMaterial> Insert(SubCategoryMaterial subCategoryMaterial)
         {
-            await context.SubCategoryMaterials.AddAsync(subCategoryMaterial);
+            var result = await context.SubCategoryMaterials.AddAsync(subCategoryMaterial);
             await context.SaveChangesAsync();
-            return true;
+            return result.Entity;
         }
 
         public override async Task<bool> Update(SubCategoryMaterial subCategoryMaterial)

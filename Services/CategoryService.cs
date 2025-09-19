@@ -18,11 +18,13 @@ namespace PresupuestitoBack.Services
             this.mapper = mapper;
         }
 
-        public async Task CreateCategory(CategoryRequestDto categoryRequestDto)
+        public async Task<ActionResult<CategoryResponseDto>> CreateCategory(CategoryRequestDto categoryRequestDto)
         {
             var category = mapper.Map<Category>(categoryRequestDto);
             category.Status = true;
-            await categoryRepository.Insert(category);
+            
+            var newCategory = await categoryRepository.Insert(category);
+            return mapper.Map<CategoryResponseDto>(newCategory);
         }
 
         public async Task UpdateCategory(int id, CategoryRequestDto categoryRequestDto)

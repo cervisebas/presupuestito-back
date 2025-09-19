@@ -31,6 +31,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<BudgetService>();
 builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
 
+builder.Services.AddScoped<StatService>();
+
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
