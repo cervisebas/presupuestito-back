@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PresupuestitoBack.DataAccess;
 
@@ -11,9 +12,11 @@ using PresupuestitoBack.DataAccess;
 namespace PresupuestitoBack.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250915153616_AddPriceToMaterial")]
+    partial class AddPriceToMaterial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -508,20 +511,24 @@ namespace PresupuestitoBack.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PersonId"));
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(250)");
+
                     b.Property<string>("CUIT")
+                        .IsRequired()
                         .HasColumnType("NVARCHAR(20)");
 
                     b.Property<string>("DNI")
+                        .IsRequired()
                         .HasColumnType("NVARCHAR(20)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("NVARCHAR(150)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR(100)");
-
-                    b.Property<string>("Locality")
                         .HasColumnType("NVARCHAR(100)");
 
                     b.Property<string>("Name")
@@ -534,12 +541,6 @@ namespace PresupuestitoBack.Migrations
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Street")
-                        .HasColumnType("NVARCHAR(150)");
-
-                    b.Property<string>("StreetNumber")
-                        .HasColumnType("NVARCHAR(20)");
 
                     b.HasKey("PersonId");
 

@@ -42,7 +42,7 @@ namespace PresupuestitoBack.Repositories
             return await base.GetAll(filter);
         }
 
-        public async Task<Person?> GetById2()
+        public async Task<Person?> GetLastCreatedPerson()
         {
             return await context.People
                 .Where(p => p.Status == true)

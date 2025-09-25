@@ -9,6 +9,7 @@
         public string MaterialBrand { get; set; }
         public string MaterialMeasure { get; set; }
         public string MaterialUnitMeasure { get; set; }
+        public decimal Price { get; set; }
         public SubCategoryMaterialResponseDto SubCategoryMaterialId { get; set; }
     }
 }

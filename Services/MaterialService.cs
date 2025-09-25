@@ -75,10 +75,13 @@ namespace PresupuestitoBack.Services
         public async Task<decimal> CalculateSubTotal(int MaterialId, decimal MaterialQuantity)
         {
             var material = await materialRepository.GetById(MaterialId);
-            var InvoiceMaterial = await materialRepository.GetMaterialPrice(MaterialId);
-            decimal MaterialPrice = InvoiceMaterial!.Price;
-            return (MaterialQuantity * MaterialPrice);
+            if (material == null)
+            {
+                throw new KeyNotFoundException("Material no encontrado.");
+            }
+            return MaterialQuantity * material.Price;
         }
+
 
     }
 }

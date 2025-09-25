@@ -37,6 +37,10 @@ namespace PresupuestitoBack.Models
         public string MaterialUnitMeasure { get; set; }
 
         [Required]
+        [Column(TypeName = "DECIMAL(18,2)")]
+        public decimal Price { get; set; } 
+
+        [Required]
         [ForeignKey("SubCategoryMaterialId")]
         public int SubCategoryMaterialId { get; set; } 
         public virtual SubCategoryMaterial OSubcategoryMaterial { get; set; } 
