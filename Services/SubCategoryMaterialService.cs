@@ -44,6 +44,12 @@ namespace PresupuestitoBack.Services
         public async Task<ActionResult<SubCategoryMaterialResponseDto>> GetSubCategoryMaterialById(int id)
         {
             var subCategoryMaterial = await subCategoryMaterialRepository.GetById(id);
+
+            if (subCategoryMaterial == null)
+            {
+                return null;
+            }
+
             return mapper.Map<SubCategoryMaterialResponseDto>(subCategoryMaterial);
         }
 

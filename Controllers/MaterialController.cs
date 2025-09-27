@@ -40,7 +40,13 @@ namespace PresupuestitoBack.Controllers
                 throw new Exception("Id invalido");
             }
             var material = await materialService.GetMaterialById(id);
-            return Ok(material);
+
+            if (material == null)
+            {
+                return NotFound();
+            }
+
+            return material;
         }
 
         [HttpGet]
@@ -49,7 +55,7 @@ namespace PresupuestitoBack.Controllers
             return await materialService.GetAllMaterials();
         }
 
-        [HttpPatch("{id}")]
+        [HttpDelete("{id}")]
         public async Task DeleteMaterial(int id)
         {
             if (id <= 0)
