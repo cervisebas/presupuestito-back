@@ -49,7 +49,7 @@ namespace PresupuestitoBack.Controllers
             return await materialService.GetAllMaterials();
         }
 
-        [HttpPatch("{id}")]
+        [HttpDelete("{id}")]
         public async Task DeleteMaterial(int id)
         {
             if (id <= 0)
