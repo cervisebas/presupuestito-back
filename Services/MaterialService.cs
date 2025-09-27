@@ -42,6 +42,12 @@ namespace PresupuestitoBack.Services
         public async Task<ActionResult<MaterialResponseDto>> GetMaterialById(int id)
         {
             var material = await materialRepository.GetById(id);
+
+            if (material == null)
+            {
+                return null;
+            }
+
             return mapper.Map<MaterialResponseDto>(material);
         }
 

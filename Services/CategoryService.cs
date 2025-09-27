@@ -44,6 +44,12 @@ namespace PresupuestitoBack.Services
         public async Task<ActionResult<CategoryResponseDto>> GetCategoryById(int id)
         {
             var category = await categoryRepository.GetById(id);
+
+            if (category == null)
+            {
+                return null;
+            }
+
             return mapper.Map<CategoryResponseDto>(category);
         }
 

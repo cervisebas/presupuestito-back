@@ -41,6 +41,12 @@ namespace PresupuestitoBack.Controllers
                 throw new Exception("Id invalido");
             }
             var category = await categoryService.GetCategoryById(id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
             return category;
         }
 

@@ -40,7 +40,13 @@ namespace PresupuestitoBack.Controllers
                 throw new Exception("Id invalido");
             }
             var material = await materialService.GetMaterialById(id);
-            return Ok(material);
+
+            if (material == null)
+            {
+                return NotFound();
+            }
+
+            return material;
         }
 
         [HttpGet]

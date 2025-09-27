@@ -41,6 +41,12 @@ namespace PresupuestitoBack.Controllers
                 throw new Exception("Id invalido");
             }
             var subCategoryMaterial = await subCategoryMaterialService.GetSubCategoryMaterialById(id);
+
+            if (subCategoryMaterial == null)
+            {
+                return NotFound();
+            }
+
             return subCategoryMaterial;
         }
 
