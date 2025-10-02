@@ -22,6 +22,8 @@ namespace PresupuestitoBack.Services
         {
             var item = mapper.Map<Item>(itemRequestDto);
             item.Status = true;
+            item.Price = item.OMaterial.Price;
+
             await itemRepository.Insert(item);
         }
 

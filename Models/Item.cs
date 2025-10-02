@@ -25,6 +25,10 @@ namespace PresupuestitoBack.Models
         public decimal Quantity { get; set; }
 
         [Required]
+        [Column(TypeName = "DECIMAL(18,2)")]
+        public decimal Price { get; set; } 
+
+        [Required]
         [Column(TypeName = "bit")]
         private bool _Status;
         public bool Status
