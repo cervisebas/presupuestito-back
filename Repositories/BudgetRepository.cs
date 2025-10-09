@@ -35,6 +35,7 @@ namespace PresupuestitoBack.Repositories
         {
             return await context.Budgets.Where(budget => budget.Status == true && budget.BudgetId == id)
                                         .Include(budget => budget.Oclient)
+                                            .ThenInclude(client => client.OPerson)
                                         .Include(budget => budget.Works.Where(work => work.Status == true))
                                             .ThenInclude(work => work.OMaterials.Where(material => material.Status == true))
                                             .ThenInclude(work => work.OMaterial)
@@ -48,6 +49,7 @@ namespace PresupuestitoBack.Repositories
         {
             return await context.Budgets.Where(o => o.Status == true)
                                         .Include(budget => budget.Oclient)
+                                            .ThenInclude(client => client.OPerson)
                                         .Include(budget => budget.Works.Where(work => work.Status == true))
                                             .ThenInclude(work => work.OMaterials.Where(material => material.Status == true))
                                             .ThenInclude(work => work.OMaterial)
