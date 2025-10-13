@@ -49,7 +49,7 @@ namespace PresupuestitoBack.Controllers
             return await workService.GetAllWorks();
         }
 
-        [HttpPatch("{id}")]
+        [HttpDelete("{id}")]
         public async Task DeleteWork(int id)
         {
             if (id <= 0)
