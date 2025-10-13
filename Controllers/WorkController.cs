@@ -17,9 +17,9 @@ namespace PresupuestitoBack.Controllers
         }
 
         [HttpPost]
-        public async Task CreateWork([FromBody] WorkRequestDto workRequestDto)
+        public async Task<ActionResult<WorkResponseDto>> CreateWork([FromBody] WorkRequestDto workRequestDto)
         {
-            await workService.CreateWork(workRequestDto);
+            return await workService.CreateWork(workRequestDto);
         }
 
         [HttpPut("{id}")]

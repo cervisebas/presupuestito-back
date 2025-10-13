@@ -20,11 +20,13 @@ namespace PresupuestitoBack.Services
             this.materialService = materialService;
         }
 
-        public async Task CreateWork(WorkRequestDto workRequestDto)
+        public async Task<ActionResult<WorkResponseDto>> CreateWork(WorkRequestDto workRequestDto)
         {
             var work = mapper.Map<Work>(workRequestDto);
             work.Status = true;
-            await workRepository.Insert(work);
+
+            var newWork = await workRepository.Insert(work);
+            return mapper.Map<WorkResponseDto>(newWork);
         }
 
         public async Task UpdateWork(int id, WorkRequestDto workRequestDto)
