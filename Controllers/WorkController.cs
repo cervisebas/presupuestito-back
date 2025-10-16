@@ -17,9 +17,9 @@ namespace PresupuestitoBack.Controllers
         }
 
         [HttpPost]
-        public async Task CreateWork([FromBody] WorkRequestDto workRequestDto)
+        public async Task<ActionResult<WorkResponseDto>> CreateWork([FromBody] WorkRequestDto workRequestDto)
         {
-            await workService.CreateWork(workRequestDto);
+            return await workService.CreateWork(workRequestDto);
         }
 
         [HttpPut("{id}")]
@@ -49,7 +49,7 @@ namespace PresupuestitoBack.Controllers
             return await workService.GetAllWorks();
         }
 
-        [HttpPatch("{id}")]
+        [HttpDelete("{id}")]
         public async Task DeleteWork(int id)
         {
             if (id <= 0)

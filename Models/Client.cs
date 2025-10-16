@@ -10,6 +10,7 @@ namespace PresupuestitoBack.Models
         [Column("ClientId",TypeName = "INT")]
         public int ClientId { get; set; }
 
+        [Required]
         [ForeignKey("PersonId")]
         public int PersonId { get; set; }
         public virtual Person OPerson { get; set; }
