@@ -7,16 +7,19 @@ namespace PresupuestitoBack.Models
     public class Person
     {
         [Key]
-        [Column("PersonId",TypeName = "INT")]
+        [Column("PersonId", TypeName = "INT")]
         public int PersonId { get; set; }
-
-        [Required]
-        [Column(TypeName = "NVARCHAR(50)")]        
-        public string Name { get; set; }
         
-        [Required]
         [Column(TypeName = "NVARCHAR(100)")]
-        public string LastName { get; set; }
+        public string? NameCompany { get; set; }
+
+       
+        [Column(TypeName = "NVARCHAR(50)")]        
+        public string? Name { get; set; }
+        
+       
+        [Column(TypeName = "NVARCHAR(100)")]
+        public string? LastName { get; set; }
 
         [Column(TypeName = "NVARCHAR(150)")]
         public string? Street { get; set; }

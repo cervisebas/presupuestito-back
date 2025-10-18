@@ -2,8 +2,9 @@
 {
     public class PersonRequestDto
     {
-        public string Name { get; set; }
-        public string LastName { get; set; }
+        public string? NameCompany { get; set; }
+        public string? Name { get; set; }
+        public string? LastName { get; set; }
         public string? Street { get; set; }
         public string? StreetNumber { get; set; }
         public string? Locality { get; set; }
