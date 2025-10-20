@@ -48,6 +48,12 @@ namespace PresupuestitoBack.Controllers
         {
             return await personService.GetAllPersons();
         }
+        
+        [HttpGet("/localities")]
+        public async Task<ActionResult<List<string>>> GetAllLocalities()
+        {
+            return await personService.GetAllLocalities();
+        }
 
         [HttpPatch("{id}")]
         public async Task DeletePerson(int id)
