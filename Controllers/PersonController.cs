@@ -49,7 +49,7 @@ namespace PresupuestitoBack.Controllers
             return await personService.GetAllPersons();
         }
         
-        [HttpGet("/Localities")]
+        [HttpGet("Localities")]
         public async Task<ActionResult<List<string>>> GetAllLocalities()
         {
             return await personService.GetAllLocalities();
