@@ -62,6 +62,29 @@ namespace PresupuestitoBack.Services
                 return mapper.Map<List<PersonResponseDto>>(persons);
             }
         }
+        
+        public async Task<ActionResult<List<string>>> GetAllLocalities()
+        {
+            var persons = await personRepository.GetAll();
+            if (persons == null)
+            {
+                throw new Exception("Localidades no encontradas.");
+            }
+            else
+            {
+                var localities = new List<string>();
+
+                foreach (var person in persons)
+                {
+                    if (person.Locality != null && person.Locality.Length != 0 && !localities.Contains(person.Locality))
+                    {
+                        localities.Add(person.Locality);
+                    }
+                }
+
+                return mapper.Map<List<string>>(localities);
+            }
+        }
 
         public async Task DeletePerson(int id)
         {
