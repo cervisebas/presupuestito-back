@@ -16,6 +16,7 @@ namespace PresupuestitoBack
 
             // Category
             CreateMap<Category, CategoryResponseDto>().ReverseMap();
+            CreateMap<Category, CategoryWithSubcategoryResponseDto>().ReverseMap();
             CreateMap<CategoryRequestDto, Category>().ReverseMap();
 
             // Client
@@ -26,7 +27,7 @@ namespace PresupuestitoBack
             // ClientHistory
             CreateMap<ClientHistory, ClientHistoryResponseDto>()
                 .ForMember(dest => dest.ClientId, opt => opt.MapFrom(src => src.Oclient))
-                .ForMember(dest => dest.BudgetsId, opt => opt.MapFrom(src => src.Budgets)); ;
+                .ForMember(dest => dest.BudgetsId, opt => opt.MapFrom(src => src.Budgets));
             CreateMap<ClientHistoryRequestDto, ClientHistory>().ReverseMap();
 
             // Cost
@@ -82,6 +83,7 @@ namespace PresupuestitoBack
             // SubCategoryMaterial
             CreateMap<SubCategoryMaterial, SubCategoryMaterialResponseDto>()
                 .ForMember(dest => dest.categoryId, opt => opt.MapFrom(src => src.OCategory));
+            CreateMap<SubCategoryMaterial, SubCategoryBaseMaterialResponseDto>();
             CreateMap<SubCategoryMaterialRequestDto, SubCategoryMaterial>().ReverseMap();
 
             // Supplier

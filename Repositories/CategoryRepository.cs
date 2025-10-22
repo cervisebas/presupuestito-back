@@ -40,7 +40,8 @@ namespace PresupuestitoBack.Repositories
         public override async Task<List<Category>> GetAll(Expression<Func<Category, bool>>? filter = null)
         {
             return await context.Categories.Where(category => category.Status == true)
-                                           .ToListAsync();
+                                            .Include(category => category.SubCategories.Where(subcategory => subcategory.Status == true))
+                                            .ToListAsync();
         }
 
     }

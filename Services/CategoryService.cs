@@ -55,7 +55,7 @@ namespace PresupuestitoBack.Services
 
         public async Task<ActionResult<List<CategoryResponseDto>>> GetAllCategories()
         {
-            var categories = await categoryRepository.GetAll();   
+            var categories = await categoryRepository.GetAll();
             if (categories == null)
             {
                 throw new Exception("Categorias no encontradas");
@@ -63,6 +63,19 @@ namespace PresupuestitoBack.Services
             else
             {
                 return mapper.Map<List<CategoryResponseDto>>(categories);
+            }
+        }
+        
+        public async Task<ActionResult<List<CategoryWithSubcategoryResponseDto>>> GetAllCategoriesWithSubcategories()
+        {
+            var categories = await categoryRepository.GetAll();   
+            if (categories == null)
+            {
+                throw new Exception("Categorias no encontradas");
+            }
+            else
+            {
+                return mapper.Map<List<CategoryWithSubcategoryResponseDto>>(categories);
             }                        
         }
 
