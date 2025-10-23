@@ -62,7 +62,7 @@ namespace PresupuestitoBack.Controllers
             return await categoryService.GetAllCategoriesWithSubcategories();
         }
 
-        [HttpPatch("{id}")]
+        [HttpDelete("{id}")]
         public async Task DeleteCategory(int id)
         {
             if (id <= 0)
