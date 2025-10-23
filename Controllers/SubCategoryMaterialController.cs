@@ -56,7 +56,7 @@ namespace PresupuestitoBack.Controllers
             return await subCategoryMaterialService.GetAllSubCategoryMaterials();
         }
 
-        [HttpPatch("{id}")]
+        [HttpDelete("{id}")]
         public async Task DeleteSubCategoryMaterial(int id)
         {
             if (id <= 0)
