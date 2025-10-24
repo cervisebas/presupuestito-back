@@ -18,11 +18,13 @@ namespace PresupuestitoBack.Services
             this.mapper = mapper;
         }
 
-        public async Task CreateCategory(CategoryRequestDto categoryRequestDto)
+        public async Task<ActionResult<CategoryResponseDto>> CreateCategory(CategoryRequestDto categoryRequestDto)
         {
             var category = mapper.Map<Category>(categoryRequestDto);
             category.Status = true;
-            await categoryRepository.Insert(category);
+            
+            var newCategory = await categoryRepository.Insert(category);
+            return mapper.Map<CategoryResponseDto>(newCategory);
         }
 
         public async Task UpdateCategory(int id, CategoryRequestDto categoryRequestDto)
@@ -42,10 +44,29 @@ namespace PresupuestitoBack.Services
         public async Task<ActionResult<CategoryResponseDto>> GetCategoryById(int id)
         {
             var category = await categoryRepository.GetById(id);
+
+            if (category == null)
+            {
+                return null;
+            }
+
             return mapper.Map<CategoryResponseDto>(category);
         }
 
         public async Task<ActionResult<List<CategoryResponseDto>>> GetAllCategories()
+        {
+            var categories = await categoryRepository.GetAll();
+            if (categories == null)
+            {
+                throw new Exception("Categorias no encontradas");
+            }
+            else
+            {
+                return mapper.Map<List<CategoryResponseDto>>(categories);
+            }
+        }
+        
+        public async Task<ActionResult<List<CategoryWithSubcategoryResponseDto>>> GetAllCategoriesWithSubcategories()
         {
             var categories = await categoryRepository.GetAll();   
             if (categories == null)
@@ -54,7 +75,7 @@ namespace PresupuestitoBack.Services
             }
             else
             {
-                return mapper.Map<List<CategoryResponseDto>>(categories);
+                return mapper.Map<List<CategoryWithSubcategoryResponseDto>>(categories);
             }                        
         }
 

@@ -22,6 +22,7 @@ namespace PresupuestitoBack.Services
         {
             var item = mapper.Map<Item>(itemRequestDto);
             item.Status = true;
+
             await itemRepository.Insert(item);
         }
 

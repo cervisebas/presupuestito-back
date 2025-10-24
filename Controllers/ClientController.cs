@@ -49,7 +49,7 @@ namespace PresupuestitoBack.Controllers
             return await clientService.GetAllClients();
         }
 
-        [HttpPatch("{id}")]
+        [HttpDelete("{id}")]
         public async Task DeleteClient(int id)
         {
             if (id <= 0)

@@ -49,7 +49,7 @@ namespace PresupuestitoBack.Controllers
             return await itemService.GetAllItems();
         }
 
-        [HttpPatch("{id}")]
+        [HttpDelete("{id}")]
         public async Task DeleteItem(int id)
         {
             if (id <= 0)

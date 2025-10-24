@@ -16,12 +16,13 @@ namespace PresupuestitoBack.Repositories
             this.context = context;
         }
         
-        public override async Task<bool> Insert(Category category)
+        public override async Task<Category> Insert(Category category)
         {
-            await context.Categories.AddAsync(category);
+            var result = await context.Categories.AddAsync(category);
             await context.SaveChangesAsync();
-            return true;
+            return result.Entity;
         }
+        
 
         public override async Task<bool> Update(Category category)
         {
@@ -39,7 +40,8 @@ namespace PresupuestitoBack.Repositories
         public override async Task<List<Category>> GetAll(Expression<Func<Category, bool>>? filter = null)
         {
             return await context.Categories.Where(category => category.Status == true)
-                                           .ToListAsync();
+                                            .Include(category => category.SubCategories.Where(subcategory => subcategory.Status == true))
+                                            .ToListAsync();
         }
 
     }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PresupuestitoBack.DataAccess;
 
@@ -11,9 +12,11 @@ using PresupuestitoBack.DataAccess;
 namespace PresupuestitoBack.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250918012113_UpdatePerson_SplitAddress_AddLocalidad")]
+    partial class UpdatePerson_SplitAddress_AddLocalidad
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -314,9 +317,6 @@ namespace PresupuestitoBack.Migrations
                     b.Property<int>("MaterialId")
                         .HasColumnType("INT");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("DECIMAL(18,2)");
-
                     b.Property<decimal>("Quantity")
                         .HasColumnType("DECIMAL(18, 2)");
 
@@ -521,16 +521,15 @@ namespace PresupuestitoBack.Migrations
                         .HasColumnType("NVARCHAR(150)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("NVARCHAR(100)");
 
                     b.Property<string>("Locality")
                         .HasColumnType("NVARCHAR(100)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("NVARCHAR(50)");
-
-                    b.Property<string>("NameCompany")
-                        .HasColumnType("NVARCHAR(100)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()

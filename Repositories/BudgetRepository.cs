@@ -16,12 +16,13 @@ namespace PresupuestitoBack.Repositories
             this.context = context;
         }
 
-        public override async Task<bool> Insert(Budget budget)
+        public override async Task<Budget> Insert(Budget budget)
         {
-            await context.Budgets.AddAsync(budget);
+            var result = await context.Budgets.AddAsync(budget);
             await context.SaveChangesAsync();
-            return true;
+            return result.Entity;
         }
+
 
         public override async Task<bool> Update(Budget budget)
         {
@@ -34,6 +35,7 @@ namespace PresupuestitoBack.Repositories
         {
             return await context.Budgets.Where(budget => budget.Status == true && budget.BudgetId == id)
                                         .Include(budget => budget.Oclient)
+                                            .ThenInclude(client => client.OPerson)
                                         .Include(budget => budget.Works.Where(work => work.Status == true))
                                             .ThenInclude(work => work.OMaterials.Where(material => material.Status == true))
                                             .ThenInclude(work => work.OMaterial)
@@ -47,6 +49,7 @@ namespace PresupuestitoBack.Repositories
         {
             return await context.Budgets.Where(o => o.Status == true)
                                         .Include(budget => budget.Oclient)
+                                            .ThenInclude(client => client.OPerson)
                                         .Include(budget => budget.Works.Where(work => work.Status == true))
                                             .ThenInclude(work => work.OMaterials.Where(material => material.Status == true))
                                             .ThenInclude(work => work.OMaterial)

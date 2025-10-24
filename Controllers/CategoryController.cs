@@ -17,9 +17,10 @@ namespace PresupuestitoBack.Controllers
         }
 
         [HttpPost]
-        public async Task CreateCategory([FromBody] CategoryRequestDto categoryRequestDto)
+        public async Task<ActionResult<CategoryResponseDto>> CreateCategory([FromBody] CategoryRequestDto categoryRequestDto)
         {
-            await categoryService.CreateCategory(categoryRequestDto);
+            var category = await categoryService.CreateCategory(categoryRequestDto);
+            return category;
         }
 
         [HttpPut("{id}")]
@@ -40,7 +41,13 @@ namespace PresupuestitoBack.Controllers
                 throw new Exception("Id invalido");
             }
             var category = await categoryService.GetCategoryById(id);
-            return Ok(category);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return category;
         }
 
         [HttpGet]
@@ -48,8 +55,14 @@ namespace PresupuestitoBack.Controllers
         {
             return await categoryService.GetAllCategories();
         }
+        
+        [HttpGet("WithSubcategory")]
+        public async Task<ActionResult<List<CategoryWithSubcategoryResponseDto>>> GetAllCategoriesWithSubcategory()
+        {
+            return await categoryService.GetAllCategoriesWithSubcategories();
+        }
 
-        [HttpPatch("{id}")]
+        [HttpDelete("{id}")]
         public async Task DeleteCategory(int id)
         {
             if (id <= 0)

@@ -18,11 +18,13 @@ namespace PresupuestitoBack.Services
             this.mapper = mapper;
         }
 
-        public async Task CreateSubCategoryMaterial(SubCategoryMaterialRequestDto subCategoryMaterialRequestDto)
+        public async Task<ActionResult<SubCategoryMaterialResponseDto>> CreateSubCategoryMaterial(SubCategoryMaterialRequestDto subCategoryMaterialRequestDto)
         {
             var subCategoryMaterial = mapper.Map<SubCategoryMaterial>(subCategoryMaterialRequestDto);
             subCategoryMaterial.Status = true;
-            await subCategoryMaterialRepository.Insert(subCategoryMaterial);
+
+            var newSubcategory = await subCategoryMaterialRepository.Insert(subCategoryMaterial);
+            return mapper.Map<SubCategoryMaterialResponseDto>(newSubcategory);
         }
 
         public async Task UpdateSubCategoryMaterial(int id, SubCategoryMaterialRequestDto subCategoryMaterialRequestDto)
@@ -42,6 +44,12 @@ namespace PresupuestitoBack.Services
         public async Task<ActionResult<SubCategoryMaterialResponseDto>> GetSubCategoryMaterialById(int id)
         {
             var subCategoryMaterial = await subCategoryMaterialRepository.GetById(id);
+
+            if (subCategoryMaterial == null)
+            {
+                return null;
+            }
+
             return mapper.Map<SubCategoryMaterialResponseDto>(subCategoryMaterial);
         }
 

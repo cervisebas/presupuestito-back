@@ -21,12 +21,14 @@ namespace PresupuestitoBack.Services
             this.workService = workService;
             this.clientHistoryService = clientHistoryService;
         }
-        
-        public async Task CreateBudget(BudgetRequestDto budgetRequestDto)
+
+        public async Task<ActionResult<BudgetResponseDto>> CreateBudget(BudgetRequestDto budgetRequestDto)
         {
             var budget = mapper.Map<Budget>(budgetRequestDto);
             budget.Status = true;
-            await budgetRepository.Insert(budget);
+
+            var newBudget = await budgetRepository.Insert(budget);
+            return mapper.Map<BudgetResponseDto>(newBudget);
         }
 
         public async Task UpdateBudget(int id, BudgetRequestDto budgetRequestDto)

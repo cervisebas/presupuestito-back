@@ -50,7 +50,7 @@ namespace PresupuestitoBack.Controllers
             return await supplierService.GetAllSuppliers();
         }
 
-        [HttpPatch("{id}")]
+        [HttpDelete("{id}")]
         public async Task DeleteSupplier(int id)
         {
             if (id <= 0)

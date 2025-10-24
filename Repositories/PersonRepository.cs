@@ -16,11 +16,11 @@ namespace PresupuestitoBack.Repositories
             this.context = context;
         }
 
-        public override async Task<bool> Insert(Person person)
+        public override async Task<Person> Insert(Person person)
         {
-            await context.People.AddAsync(person);
+            var result = await context.People.AddAsync(person);
             await context.SaveChangesAsync();
-            return true;
+            return result.Entity;
         }
 
         public override async Task<bool> Update(Person person)
@@ -42,7 +42,7 @@ namespace PresupuestitoBack.Repositories
             return await base.GetAll(filter);
         }
 
-        public async Task<Person?> GetById2()
+        public async Task<Person?> GetLastCreatedPerson()
         {
             return await context.People
                 .Where(p => p.Status == true)

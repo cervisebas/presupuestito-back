@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PresupuestitoBack.DTOs.Request;
 using PresupuestitoBack.DTOs.Response;
+using PresupuestitoBack.Models;
 using PresupuestitoBack.Services;
 
 namespace PresupuestitoBack.Controllers
@@ -17,9 +18,9 @@ namespace PresupuestitoBack.Controllers
         }
 
         [HttpPost]
-        public async Task CreateBudget([FromBody] BudgetRequestDto budgetRequestDto)
+        public async Task<ActionResult<BudgetResponseDto>> CreateBudget([FromBody] BudgetRequestDto budgetRequestDto)
         {
-            await budgetService.CreateBudget(budgetRequestDto);
+            return await budgetService.CreateBudget(budgetRequestDto);
         }
 
         [HttpPut("{id}")]
