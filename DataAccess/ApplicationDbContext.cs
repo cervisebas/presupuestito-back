@@ -30,5 +30,6 @@ namespace PresupuestitoBack.DataAccess
         public DbSet<PaymentBudget> PaymentsBudget { get; set; }
         public DbSet<PaymentSalary> PaymentsSalary { get; set;}
         public DbSet<PaymentInvoice> PaymentsInvoice { get; set; }
+        public DbSet<Setting> Settings { get; set; }
     }
 }
