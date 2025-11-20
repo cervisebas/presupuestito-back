@@ -16,19 +16,19 @@ namespace PresupuestitoBack.Models
         public string MaterialName { get; set; }
 
         [Column(TypeName = "NVARCHAR(400)")]
-        public string MaterialDescription { get; set; }
+        public string? MaterialDescription { get; set; }
 
         [Column(TypeName = "NVARCHAR(50)")]
-        public string MaterialColor { get; set; }
+        public string? MaterialColor { get; set; }
 
         [Column(TypeName = "NVARCHAR(100)")]
-        public string MaterialBrand { get; set; }
+        public string? MaterialBrand { get; set; }
 
         [Column(TypeName = "NVARCHAR(50)")]
-        public string MaterialMeasure { get; set; }
+        public string? MaterialMeasure { get; set; }
 
         [Column(TypeName = "NVARCHAR(50)")]
-        public string MaterialUnitMeasure { get; set; }
+        public string? MaterialUnitMeasure { get; set; }
 
         [Required]
         [Column(TypeName = "DECIMAL(18,2)")]
