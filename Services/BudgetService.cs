@@ -48,7 +48,11 @@ namespace PresupuestitoBack.Services
         public async Task<ActionResult<BudgetResponseDto>> GetBudgetById(int id)
         {
             var budget = await budgetRepository.GetById(id);
-            return mapper.Map<BudgetResponseDto>(budget);   
+            var dto = mapper.Map<BudgetResponseDto>(budget);
+
+            MarkExpirationFlag(dto); 
+
+            return dto;     
             
         }
 
@@ -59,10 +63,11 @@ namespace PresupuestitoBack.Services
             {
                 throw new KeyNotFoundException("El presupuesto no fue encontrado");
             }
-            else
-            {
-                return mapper.Map<List<BudgetResponseDto>>(budgets);
-            }
+            var list = mapper.Map<List<BudgetResponseDto>>(budgets);
+
+            MarkExpirationFlagForList(list); 
+
+            return list;
         }
 
         public async Task<ActionResult<List<BudgetResponseDto>>> GetAllBudgets()
@@ -72,10 +77,13 @@ namespace PresupuestitoBack.Services
             {
                 throw new Exception("Presupuestos no encontrados");
             }
-            else
-            {
-                return mapper.Map<List<BudgetResponseDto>>(budgets);    
-            }
+            
+            var list = mapper.Map<List<BudgetResponseDto>>(budgets);
+
+            MarkExpirationFlagForList(list); 
+
+            return list;
+           
         }
 
         public async Task DeleteBudget(int id)
@@ -105,6 +113,25 @@ namespace PresupuestitoBack.Services
             var budgetMapped = mapper.Map<BudgetRequestDto>(budget);
             await UpdateBudget(budget.BudgetId, budgetMapped);
             return BudgetTotalPrice;
+        }
+
+       private void MarkExpirationFlag(BudgetResponseDto dto)
+        {
+            dto.IsCloseToExpiration = CheckIfCloseToDeadline(dto.DeadLine, 10);
+        }
+
+        private void MarkExpirationFlagForList(List<BudgetResponseDto> list)
+        {
+            foreach (var dto in list)
+            {
+                MarkExpirationFlag(dto);
+            }
+        }
+
+        private bool CheckIfCloseToDeadline(DateTime? deadline, int daysBefore)
+        {
+            return deadline.HasValue 
+            && deadline.Value <= DateTime.UtcNow.AddDays(daysBefore);
         }
         
     }

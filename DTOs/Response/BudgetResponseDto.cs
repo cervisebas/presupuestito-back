@@ -12,6 +12,6 @@ namespace PresupuestitoBack.DTOs.Response
         public DateTime DateCreated { get; set; }
         public DateTime? DeadLine { get; set; }
         public string BudgetStatus { get; set; }
-
+        public bool IsCloseToExpiration { get; set; } 
     }
 }
