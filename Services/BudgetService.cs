@@ -14,8 +14,10 @@ namespace PresupuestitoBack.Services
         private readonly WorkService workService;
         private readonly ClientHistoryService clientHistoryService;
 
-        public BudgetService(IBudgetRepository budgetRepository, IMapper mapper, WorkService workService, ClientHistoryService clientHistoryService)
+        private readonly IWorkRepository workRepository;
+        public BudgetService(IBudgetRepository budgetRepository, IMapper mapper, WorkService workService, ClientHistoryService clientHistoryService, IWorkRepository workRepository)
         {
+            this.workRepository = workRepository;
             this.budgetRepository = budgetRepository;
             this.mapper = mapper;
             this.workService = workService;
@@ -133,6 +135,35 @@ namespace PresupuestitoBack.Services
             return deadline.HasValue 
             && deadline.Value <= DateTime.UtcNow.AddDays(daysBefore);
         }
-        
+
+        public async Task<int> UpdateBudgetItemPricesAsync(int budgetId)
+        {
+            var works = await workRepository.GetWorksWithMaterialsByBudgetId(budgetId);
+
+            int updatedItems = 0;
+
+            foreach (var work in works)
+            {
+                foreach (var item in work.OMaterials)
+                {
+                    var precioActualMaterial = item.OMaterial.Price;
+
+                    if (item.Price != precioActualMaterial)
+                    {
+                        item.Price = precioActualMaterial;
+                        updatedItems++;
+                    }
+                }
+
+            // recalcular total del work
+            await workService.CalculateTotalWorkPrice(work.WorkId);
+
+            // guardar cambios en el work
+            await workRepository.Update(work);
+            }
+
+            return updatedItems;
+        }   
+
     }
 }
