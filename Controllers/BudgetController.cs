@@ -83,17 +83,11 @@ namespace PresupuestitoBack.Controllers
         [HttpPut("{id}/update-item-prices")]
         public async Task<IActionResult> UpdateBudgetItemPrices(int id)
         {
-            // Actualiza los precios de los items
             int updatedItems = await budgetService.UpdateBudgetItemPricesAsync(id);
 
-            // Recalcula el total del presupuesto
             await budgetService.CalculateTotalPriceBudget(id);
 
-            return Ok(new 
-            {    
-                Message = $"Se actualizaron {updatedItems} ítems del presupuesto.",
-                UpdatedItems = updatedItems
-            });
+            return NoContent();
         }
 
 

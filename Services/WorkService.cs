@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PresupuestitoBack.DataAccess;
 using PresupuestitoBack.DTOs.Request;
 using PresupuestitoBack.DTOs.Response;
 using PresupuestitoBack.Models;
 using PresupuestitoBack.Repositories.IRepository;
-using Microsoft.EntityFrameworkCore;
-{
-    
-}
-
 namespace PresupuestitoBack.Services
 {
     public class WorkService
@@ -104,11 +100,7 @@ namespace PresupuestitoBack.Services
         }
         public async Task<List<Work>> GetWorksWithMaterialsByBudgetId(int budgetId)
         {
-            return await _context.Works
-                .Where(w => w.BudgetId == budgetId && w.Status == true)
-                .Include(w => w.OMaterials)
-                    .ThenInclude(om => om.OMaterial)
-                .ToListAsync();
+             return await workRepository.GetWorksWithMaterialsByBudgetId(budgetId);
         }
         
     }

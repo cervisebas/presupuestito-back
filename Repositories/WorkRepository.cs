@@ -46,10 +46,19 @@ namespace PresupuestitoBack.Repositories
             return await context.Works.Where(work => work.Status == true)
                                       .Include(work => work.OMaterials.Where(material => material.Status == true))
                                       .ThenInclude(items => items.OMaterial)
-                                        .ThenInclude(material => material.OSubcategoryMaterial)
-                                             .ThenInclude(subCategory => subCategory.OCategory)
+                                             .ThenInclude(material => material.OSubcategoryMaterial)
+                                                  .ThenInclude(subCategory => subCategory.OCategory)
                                       .ToListAsync();
         }
-
+        public async Task<List<Work>> GetWorksWithMaterialsByBudgetId(int budgetId)
+        {
+            return await context.Works
+                .Where(w => w.BudgetId == budgetId && w.Status == true)
+                .Include(w => w.OMaterials.Where(om => om.Status == true))
+                    .ThenInclude(om => om.OMaterial)
+                        .ThenInclude(m => m.OSubcategoryMaterial)
+                            .ThenInclude(sc => sc.OCategory)
+                .ToListAsync();
+        }
     }
 }
