@@ -1,10 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PresupuestitoBack.DTOs.Request;
 using PresupuestitoBack.DTOs.Requests;
-using PresupuestitoBack.DTOs.Response;
 using PresupuestitoBack.DTOs.Responses;
-using PresupuestitoBack.Models;
 using PresupuestitoBack.Repositories.IRepository;
 
 namespace PresupuestitoBack.Services
@@ -20,7 +17,7 @@ namespace PresupuestitoBack.Services
             this.mapper = mapper;
         }
 
-        public async Task<ActionResult<SettingResponseDto>> GetSettingByLabel(string label)
+        public async Task<SettingResponseDto> GetSettingByLabel(string label)
         {
             var setting = await settingRepository.GetByLabelAsync(label);
 

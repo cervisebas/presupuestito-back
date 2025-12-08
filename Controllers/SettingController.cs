@@ -1,8 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
-using PresupuestitoBack.DTOs.Request;
 using PresupuestitoBack.DTOs.Requests;
-using PresupuestitoBack.DTOs.Response;
 using PresupuestitoBack.DTOs.Responses;
 using PresupuestitoBack.Services;
 
@@ -21,18 +18,17 @@ namespace PresupuestitoBack.Controllers
         }
 
         [HttpGet("{label}")]
-        public async Task<ActionResult<SettingResponseDto>> GetSettingByLabel(string label)
+        public async Task<SettingResponseDto> GetSettingByLabel(string label)
         {
             var result = await settingService.GetSettingByLabel(label);
-            return Ok(result);
+            return result;
         }
 
         [HttpPut("{label}")]
-        public async Task<ActionResult> UpdateSetting(string label, [FromBody] SettingRequestDto dto)
+        public async Task<SettingResponseDto> UpdateSetting(string label, [FromBody] SettingRequestDto dto)
         {
             var setting = await settingService.UpdateOrCreateSetting(label, dto);
-
-            return Ok(setting);
+            return setting;
         }
     }
 }
