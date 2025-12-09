@@ -5,6 +5,6 @@ namespace PresupuestitoBack.Repositories.IRepository
 {
     public interface IWorkRepository : IRepository<Work>
     {
-        Task<List<Work>> GetWorksWithMaterialsByBudgetId(int budgetId);
+
     }
 }

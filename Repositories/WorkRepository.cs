@@ -50,15 +50,5 @@ namespace PresupuestitoBack.Repositories
                                                   .ThenInclude(subCategory => subCategory.OCategory)
                                       .ToListAsync();
         }
-        public async Task<List<Work>> GetWorksWithMaterialsByBudgetId(int budgetId)
-        {
-            return await context.Works
-                .Where(w => w.BudgetId == budgetId && w.Status == true)
-                .Include(w => w.OMaterials.Where(om => om.Status == true))
-                    .ThenInclude(om => om.OMaterial)
-                        .ThenInclude(m => m.OSubcategoryMaterial)
-                            .ThenInclude(sc => sc.OCategory)
-                .ToListAsync();
-        }
     }
 }
