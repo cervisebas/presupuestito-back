@@ -35,15 +35,15 @@ namespace PresupuestitoBack.Services
 
         public async Task UpdateBudget(int id, BudgetRequestDto budgetRequestDto)
         {
-            var existyingBudget = await budgetRepository.GetById(id);
-            if (existyingBudget == null)
+            var existingBudget = await budgetRepository.GetById(id);
+            if (existingBudget == null)
             {
                 throw new Exception("El presupuesto no existe");
             }
             else
             {
-                mapper.Map(budgetRequestDto, existyingBudget);
-                await budgetRepository.Update(existyingBudget);
+                mapper.Map(budgetRequestDto, existingBudget);
+                await budgetRepository.Update(existingBudget);
             }
         }
 
@@ -51,8 +51,6 @@ namespace PresupuestitoBack.Services
         {
             var budget = await budgetRepository.GetById(id);
             var dto = mapper.Map<BudgetResponseDto>(budget);
-
-            MarkExpirationFlag(dto); 
 
             return dto;     
             
@@ -67,7 +65,6 @@ namespace PresupuestitoBack.Services
             }
             var list = mapper.Map<List<BudgetResponseDto>>(budgets);
 
-            MarkExpirationFlagForList(list); 
 
             return list;
         }
@@ -81,8 +78,6 @@ namespace PresupuestitoBack.Services
             }
             
             var list = mapper.Map<List<BudgetResponseDto>>(budgets);
-
-            MarkExpirationFlagForList(list); 
 
             return list;
            
@@ -117,30 +112,9 @@ namespace PresupuestitoBack.Services
             return BudgetTotalPrice;
         }
 
-       private void MarkExpirationFlag(BudgetResponseDto dto)
-        {
-            dto.IsCloseToExpiration = CheckIfCloseToDeadline(dto.DeadLine, 10);
-        }
-
-        private void MarkExpirationFlagForList(List<BudgetResponseDto> list)
-        {
-            foreach (var dto in list)
-            {
-                MarkExpirationFlag(dto);
-            }
-        }
-
-        private bool CheckIfCloseToDeadline(DateTime? deadline, int daysBefore)
-        {
-            return deadline.HasValue 
-            && deadline.Value <= DateTime.UtcNow.AddDays(daysBefore);
-        }
-
-        public async Task<int> UpdateBudgetItemPricesAsync(int budgetId)
+        public async Task UpdateBudgetItemPricesAsync(int budgetId)
         {
             var works = await workRepository.GetWorksWithMaterialsByBudgetId(budgetId);
-
-            int updatedItems = 0;
 
             foreach (var work in works)
             {
@@ -151,7 +125,6 @@ namespace PresupuestitoBack.Services
                     if (item.Price != precioActualMaterial)
                     {
                         item.Price = precioActualMaterial;
-                        updatedItems++;
                     }
                 }
 
@@ -161,8 +134,6 @@ namespace PresupuestitoBack.Services
             // guardar cambios en el work
             await workRepository.Update(work);
             }
-
-            return updatedItems;
         }   
 
     }
