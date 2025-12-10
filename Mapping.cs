@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using PresupuestitoBack.DTOs.Request;
+using PresupuestitoBack.DTOs.Requests;
 using PresupuestitoBack.DTOs.Response;
+using PresupuestitoBack.DTOs.Responses;
 using PresupuestitoBack.Models;
 
 namespace PresupuestitoBack
@@ -99,6 +101,10 @@ namespace PresupuestitoBack
             CreateMap<Work, WorkResponseDto>()
                 .ForMember(dest => dest.ItemsId, opt => opt.MapFrom(src => src.OMaterials));
             CreateMap<WorkRequestDto, Work>().ReverseMap();
+
+            //Setting
+            CreateMap<Setting, SettingResponseDto>().ReverseMap();
+            CreateMap<SettingRequestDto, Setting>().ReverseMap();
         }
     }
 }

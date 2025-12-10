@@ -4,6 +4,7 @@ using PresupuestitoBack.Services;
 using PresupuestitoBack.Repositories;
 using PresupuestitoBack.Repositories.IRepository;
 using PresupuestitoBack;
+using PresupuestitoBack.Repositories.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -86,6 +87,9 @@ builder.Services.AddScoped<ISupplierHistoryRepository, SupplierHistoryRepository
 
 builder.Services.AddScoped<WorkService>();
 builder.Services.AddScoped<IWorkRepository, WorkRepository>();
+
+builder.Services.AddScoped<SettingService>();
+builder.Services.AddScoped<ISettingRepository, SettingRepository>();
 
 #endregion
 
