@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PresupuestitoBack.DataAccess;
 using PresupuestitoBack.DTOs.Request;
 using PresupuestitoBack.DTOs.Response;
 using PresupuestitoBack.Models;
 using PresupuestitoBack.Repositories.IRepository;
-
 namespace PresupuestitoBack.Services
 {
     public class WorkService
@@ -13,11 +14,14 @@ namespace PresupuestitoBack.Services
         private readonly IMapper mapper;
         private readonly MaterialService materialService;
 
-        public WorkService(IWorkRepository workRepository, IMapper mapper, MaterialService materialService)
+        private readonly ApplicationDbContext _context;
+
+        public WorkService(IWorkRepository workRepository, IMapper mapper, MaterialService materialService, ApplicationDbContext context)
         {
             this.workRepository = workRepository;
             this.mapper = mapper;
             this.materialService = materialService;
+            this._context = context;
         }
 
         public async Task<ActionResult<WorkResponseDto>> CreateWork(WorkRequestDto workRequestDto)
@@ -93,6 +97,10 @@ namespace PresupuestitoBack.Services
             work.CostPrice = WorkPrice;
             await workRepository.Update(work);
             return WorkPrice;
+        }
+        public async Task<List<Work>> GetWorksWithMaterialsByBudgetId(int budgetId)
+        {
+             return await workRepository.GetWorksWithMaterialsByBudgetId(budgetId);
         }
         
     }
