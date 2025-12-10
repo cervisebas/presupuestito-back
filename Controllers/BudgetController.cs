@@ -80,14 +80,14 @@ namespace PresupuestitoBack.Controllers
             return await budgetService.CalculateTotalPriceBudget(BudgetId);
         }
 
-        [HttpPut("UpdateItemPrices/{BudgetId}")]
+        [HttpPut("UpdateItemPrices/{id}")]
         public async Task<IActionResult> UpdateBudgetItemPrices(int id)
         {
 
             await budgetService.UpdateBudgetItemPricesAsync(id);
             await budgetService.CalculateTotalPriceBudget(id);
 
-            return NoContent();
+            return Ok();
         }
 
 

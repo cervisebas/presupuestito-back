@@ -97,15 +97,17 @@ namespace PresupuestitoBack.Services
             }
         }
         
-        public async Task<decimal> CalculateTotalPriceBudget(int BudgetId)
+        public async Task<decimal> CalculateTotalPriceBudget(int budgetId)
         {
             decimal BudgetTotalPrice = 0;
-            var budget = await budgetRepository.GetById(BudgetId);
+            var budget = await budgetRepository.GetById(budgetId);
+            
             foreach(var work in budget.Works)
             {
                 int WorkId = work.WorkId;
                 BudgetTotalPrice += await this.workService.CalculateTotalWorkPrice(WorkId);
-            }          
+            }
+
             budget.Cost = BudgetTotalPrice;
             var budgetMapped = mapper.Map<BudgetRequestDto>(budget);
             await UpdateBudget(budget.BudgetId, budgetMapped);
